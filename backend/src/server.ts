@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { pool } from "./config/database";
 import disciplinaRoutes from "./routes/disciplinaRoutes";
+import questaoRoutes from "./routes/questaoRoutes";
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.get("/api/health", async (_req, res) => {
 app.use("/api/disciplinas", disciplinaRoutes);
 
 const PORT = Number(process.env.PORT || 3001);
+
+app.use("/api/questoes", questaoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Geek de Boa API iniciada na porta ${PORT}`);
