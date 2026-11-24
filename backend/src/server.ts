@@ -4,6 +4,7 @@ import cors from "cors";
 import { pool } from "./config/database";
 import disciplinaRoutes from "./routes/disciplinaRoutes";
 import questaoRoutes from "./routes/questaoRoutes";
+import simuladoRoutes from "./routes/simuladoRoutes";
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use("/api/disciplinas", disciplinaRoutes);
 const PORT = Number(process.env.PORT || 3001);
 
 app.use("/api/questoes", questaoRoutes);
+
+app.use("/api/simulados", simuladoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Geek de Boa API iniciada na porta ${PORT}`);
