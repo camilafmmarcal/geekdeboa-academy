@@ -410,3 +410,59 @@
     transform: none;
   }
 }
+
+/* AVISO DE CADASTRO - FIAP ON */
+
+.course-registration-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  background: #fff7e6;
+  border: 1px solid #f5d89a;
+  border-radius: 10px;
+  color: #854d0e;
+}
+
+.course-registration-alert > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #a16207;
+}
+
+.course-registration-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.course-registration-content strong {
+  font-size: 13px;
+}
+
+.course-registration-content p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #854d0e;
+}
+
+.course-registration-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #1769d2;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  width: fit-content;
+}
+
+.course-registration-link:hover {
+  color: #102a63;
+}
+
+.course-registration-link:focus-visible {
+  outline: 2px solid #1769d2;
+  outline-offset: 3px;
+}

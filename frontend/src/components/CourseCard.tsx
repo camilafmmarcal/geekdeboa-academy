@@ -9,7 +9,9 @@ import {
   GraduationCap,
   Clock3,
   ExternalLink,
-  Layers
+  Layers,
+  AlertCircle,
+  ArrowRight
 } from "lucide-react";
 
 import type { Curso } from "../types/curso";
@@ -91,6 +93,18 @@ function definirCategoria(categoria: string) {
 export default function CourseCard({ curso }: Props) {
   const { icone: Icone, cor } =
     definirCategoria(curso.categoria);
+    const cursoFiap = (() => {
+  try {
+    const dominio = new URL(curso.link).hostname;
+
+    return (
+      dominio === "on.fiap.com.br" ||
+      dominio.endsWith(".on.fiap.com.br")
+    );
+  } catch {
+    return false;
+  }
+})();
 
   const instituicao =
     identificarInstituicao(curso.link);
@@ -153,6 +167,32 @@ export default function CourseCard({ curso }: Props) {
               : "Carga horária não informada"}
           </span>
         </div>
+
+{cursoFiap && (
+  <div className="course-registration-alert">
+    <AlertCircle size={21} />
+
+    <div className="course-registration-content">
+      <strong>Atenção ao cadastro</strong>
+
+      <p>
+        Para acessar os cursos da FIAP ON,
+        realize seu cadastro no Programa Eu Capacito.
+        Se já possui cadastro, utilize sua conta
+        na plataforma.
+      </p>
+
+      <Link
+        to="/eu-capacito"
+        className="course-registration-link"
+      >
+        Como realizar o cadastro
+        <ArrowRight size={15} />
+      </Link>
+    </div>
+  </div>
+)}
+
 
         
 {possuiModulos ? (
