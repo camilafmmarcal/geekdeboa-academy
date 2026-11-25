@@ -1,0 +1,412 @@
+
+.courses-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* BANNER */
+
+.catalog-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 30px;
+  border-radius: 18px;
+  background: linear-gradient(
+    120deg,
+    #102a63,
+    #1769d2
+  );
+  color: white;
+}
+
+.catalog-banner svg {
+  flex-shrink: 0;
+}
+
+.catalog-banner h2 {
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+.catalog-banner p {
+  color: #e0edff;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* FILTROS */
+
+.course-filters {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.filter-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.filter-heading h3 {
+  font-size: 16px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.3fr 1fr;
+  gap: 16px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.filter-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.filter-field select,
+.search-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--background);
+  color: var(--text);
+}
+
+.filter-field select {
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+}
+
+.search-input svg {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-input input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.search-input:focus-within,
+.filter-field select:focus-visible {
+  border-color: var(--secondary);
+  outline: 2px solid #dbeafe;
+}
+
+.filter-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.filter-warning {
+  margin-top: 14px;
+  color: #b45309;
+  font-size: 13px;
+}
+
+.clear-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* GRID DE CURSOS */
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(16, 42, 99, 0.12);
+}
+
+/* CAPAS */
+
+.course-cover {
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: #1769d2;
+}
+
+.course-cover.programacao {
+  background: linear-gradient(135deg, #102a63, #1769d2);
+}
+
+.course-cover.database {
+  background: linear-gradient(135deg, #164e63, #0891b2);
+}
+
+.course-cover.ia {
+  background: linear-gradient(135deg, #312e81, #6366f1);
+}
+
+.course-cover.seguranca {
+  background: linear-gradient(135deg, #064e3b, #059669);
+}
+
+.course-cover.web {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+}
+
+.course-cover.redes {
+  background: linear-gradient(135deg, #155e75, #0284c7);
+}
+
+.course-cover.engenharia {
+  background: linear-gradient(135deg, #334155, #64748b);
+}
+
+.course-cover.geral {
+  background: linear-gradient(135deg, #102a63, #39a8e8);
+}
+
+.course-provider {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  max-width: calc(100% - 24px);
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* CONTEUDO DO CARD */
+
+.course-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.course-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.category-tag,
+.level-tag {
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.category-tag {
+  background: #e8f0ff;
+  color: #1769d2;
+}
+
+.level-tag.iniciante {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.level-tag.intermediario {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.level-tag.avancado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.course-body h3 {
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--primary);
+}
+
+.course-description {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.course-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+
+.course-button,
+.retry-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.course-button:hover,
+.retry-button:hover {
+  background: var(--primary);
+}
+
+.course-unavailable {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 12px;
+  font-size: 13px;
+}
+
+/* ESTADOS DA CONSULTA */
+
+.catalog-state {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 30px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--secondary);
+}
+
+.catalog-state h3 {
+  color: var(--primary);
+}
+
+.catalog-state p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.error-state svg {
+  color: var(--danger);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1250px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 22px;
+  }
+
+  .catalog-banner h2 {
+    font-size: 21px;
+  }
+
+  .course-filters {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+
+  .course-card {
+    transition: none;
+  }
+
+  .course-card:hover {
+    transform: none;
+  }
+}
