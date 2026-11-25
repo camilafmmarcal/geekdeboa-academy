@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import type { Curso } from "../types/curso";
+import { Link } from "react-router-dom";
 
 interface Props {
   curso: Curso;
@@ -94,6 +95,8 @@ export default function CourseCard({ curso }: Props) {
   const instituicao =
     identificarInstituicao(curso.link);
 
+  const possuiModulos = [2, 4].includes(curso.id);
+
   let linkSeguro: string | null = null;
 
   try {
@@ -151,21 +154,30 @@ export default function CourseCard({ curso }: Props) {
           </span>
         </div>
 
-        {linkSeguro ? (
-          <a
-            href={linkSeguro}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="course-button"
-          >
-            Acessar recurso
-            <ExternalLink size={16} />
-          </a>
-        ) : (
-          <span className="course-unavailable">
-            Link indisponível
-          </span>
-        )}
+        
+{possuiModulos ? (
+  <Link
+    to={`/cursos/${curso.id}`}
+    className="course-button"
+  >
+    Ver módulos do curso
+    <Layers size={16} />
+  </Link>
+) : linkSeguro ? (
+  <a
+    href={linkSeguro}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="course-button"
+  >
+    Acessar curso
+    <ExternalLink size={16} />
+  </a>
+) : (
+  <span className="course-unavailable">
+    Link indisponível
+  </span>
+)}
 
       </div>
     </article>

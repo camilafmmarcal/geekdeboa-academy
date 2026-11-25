@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 const indicadores = [
   {
     titulo: "Cursos e recursos",
-    valor: 17,
+    valor: 16,
     icone: GraduationCap,
     cor: "blue"
   },

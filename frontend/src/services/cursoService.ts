@@ -3,6 +3,7 @@ import { api } from "./api";
 
 import type {
   Curso,
+  CursoModulo,
   CategoriaCurso,
   FiltrosCurso,
   RespostaAPI
@@ -35,6 +36,20 @@ export const cursoService = {
 
     return resposta.data;
   },
+  
+
+async listarModulos(
+  cursoId: number,
+  signal?: AbortSignal
+): Promise<RespostaAPI<CursoModulo>> {
+  const resposta = await api.get<RespostaAPI<CursoModulo>>(
+    `/cursos/${cursoId}/modulos`,
+    { signal }
+  );
+
+  return resposta.data;
+},
+
 
   async buscarPorId(id: number): Promise<Curso> {
     const resposta = await api.get<Curso>(

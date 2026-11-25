@@ -20,6 +20,48 @@ export class CursoController {
     private readonly service = new CursoService()
   ) {}
 
+listarModulos = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const textoId = String(req.params.id);
+  const id = Number(textoId);
+
+  if (
+    !/^[1-9]\d*$/.test(textoId) ||
+    !Number.isSafeInteger(id)
+  ) {
+    res.status(400).json({
+      erro: "ID do curso inválido."
+    });
+    return;
+  }
+
+  try {
+    const curso = await this.service.buscarPorId(id);
+
+    if (!curso) {
+      res.status(404).json({
+        erro: "Curso não encontrado."
+      });
+      return;
+    }
+
+    const dados = await this.service.listarModulos(id);
+
+    res.status(200).json({
+      total: dados.length,
+      dados
+    });
+  } catch (error) {
+    console.error("Erro ao consultar módulos:", error);
+
+    res.status(500).json({
+      erro: "Não foi possível consultar os módulos."
+    });
+  }
+};
+
   listar = async (
     req: Request,
     res: Response

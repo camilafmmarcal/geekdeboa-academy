@@ -20,4 +20,7 @@ export class CursoService {
   async listarCategorias() {
     return this.repository.listarCategorias();
   }
+  async listarModulos(cursoId: number) {
+  return this.repository.listarModulos(cursoId);
+}
 }

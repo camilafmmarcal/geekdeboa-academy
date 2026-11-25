@@ -558,3 +558,29 @@
     font-size: 24px;
   }
 }
+.sidebar-group {
+  margin-bottom: 24px;
+}
+
+.sidebar-group + .sidebar-group {
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.menu-link svg {
+  flex-shrink: 0;
+}
+
+.sidebar-group .menu-label {
+  font-size: 10px;
+}
+
+@media (max-width: 900px) {
+  .sidebar-group {
+    margin-bottom: 12px;
+  }
+
+  .sidebar-group + .sidebar-group {
+    padding-top: 12px;
+  }
+}

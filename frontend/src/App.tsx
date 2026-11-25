@@ -8,6 +8,8 @@ import {
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import PaginaProvisoria from "./pages/PaginaProvisoria";
+import EuCapacito from "./pages/EuCapacito";
+import CursoDetalhes from "./pages/CursoDetalhes";
 
 import "./App.css";
 import Cursos from "./pages/Cursos";
@@ -19,10 +21,18 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
 
+        <Route
+  path="eu-capacito"
+  element={<EuCapacito />}
+/>
+
           <Route index element={<Dashboard />} />
 
           <Route path="cursos" element={<Cursos />} />
-
+          <Route
+  path="cursos/:id"
+  element={<CursoDetalhes />}
+/>
           <Route
             path="questoes"
             element={

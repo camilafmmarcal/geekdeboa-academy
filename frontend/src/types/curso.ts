@@ -29,3 +29,13 @@ export interface RespostaAPI<T> {
   total: number;
   dados: T[];
 }
+
+export interface CursoModulo {
+  id: number;
+  curso_id: number;
+  titulo: string;
+  ordem: number;
+  descricao: string | null;
+  carga_horaria: number | null;
+  link: string;
+}

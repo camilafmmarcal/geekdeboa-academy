@@ -1,0 +1,182 @@
+
+.capacito-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.capacito-hero {
+  background: linear-gradient(
+    120deg,
+    #102a63,
+    #1769d2
+  );
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.capacito-hero h2 {
+  font-size: clamp(25px, 3vw, 36px);
+  margin: 16px 0;
+}
+
+.capacito-hero p {
+  max-width: 650px;
+  line-height: 1.7;
+  color: #e0edff;
+  margin-bottom: 24px;
+}
+
+.capacito-beneficios {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.capacito-card,
+.capacito-panel,
+.capacito-cta {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.capacito-card svg {
+  color: var(--secondary);
+  margin-bottom: 16px;
+}
+
+.capacito-card h3 {
+  color: var(--primary);
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.capacito-card p,
+.capacito-panel p,
+.capacito-cta p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.capacito-panel h2,
+.capacito-cta h2 {
+  color: var(--primary);
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
+.capacito-steps {
+  list-style: none;
+  padding: 0;
+  margin: 26px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.capacito-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.step-number {
+  background: #e8f0ff;
+  color: var(--secondary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.capacito-steps h3 {
+  color: var(--primary);
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.capacito-faq details {
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+
+.capacito-faq details:last-child {
+  border-bottom: none;
+}
+
+.capacito-faq summary {
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.capacito-faq details p {
+  margin-top: 14px;
+}
+
+.capacito-faq a,
+.capacito-source a {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+.capacito-cta {
+  text-align: center;
+  background: #e8f0ff;
+}
+
+.capacito-cta .course-button {
+  display: inline-flex;
+  margin-top: 20px;
+}
+
+.capacito-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.capacito-privacy svg {
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+.capacito-source {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .capacito-beneficios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 650px) {
+  .capacito-beneficios {
+    grid-template-columns: 1fr;
+  }
+
+  .capacito-hero,
+  .capacito-panel,
+  .capacito-card,
+  .capacito-cta {
+    padding: 20px;
+  }
+}

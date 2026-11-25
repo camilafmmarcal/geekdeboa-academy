@@ -18,7 +18,40 @@ export interface Curso extends RowDataPacket {
   carga_horaria: number | null;
 }
 
+export interface CursoModulo extends RowDataPacket {
+  id: number;
+  curso_id: number;
+  titulo: string;
+  ordem: number;
+  descricao: string | null;
+  carga_horaria: number | null;
+  link: string;
+}
+
 export class CursoRepository {
+
+async listarModulos(cursoId: number): Promise<CursoModulo[]> {
+  const [rows] = await pool.execute<CursoModulo[]>(
+    `SELECT
+       m.id,
+       m.curso_id,
+       m.titulo,
+       m.ordem,
+       m.descricao,
+       m.carga_horaria,
+       m.link
+     FROM curso_modulos m
+     INNER JOIN cursos c ON c.id = m.curso_id
+     WHERE m.curso_id = ?
+       AND m.ativo = TRUE
+       AND c.ativo = TRUE
+     ORDER BY m.ordem ASC`,
+    [cursoId]
+  );
+
+  return rows;
+}
+
   async listar(filtros: FiltrosCurso): Promise<Curso[]> {
     const condicoes = ["ativo = TRUE"];
     const valores: string[] = [];
