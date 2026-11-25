@@ -5,6 +5,7 @@ import { pool } from "./config/database";
 import disciplinaRoutes from "./routes/disciplinaRoutes";
 import questaoRoutes from "./routes/questaoRoutes";
 import simuladoRoutes from "./routes/simuladoRoutes";
+import cursoRoutes from "./routes/cursoRoutes";
 
 const app = express();
 
@@ -40,6 +41,8 @@ const PORT = Number(process.env.PORT || 3001);
 app.use("/api/questoes", questaoRoutes);
 
 app.use("/api/simulados", simuladoRoutes);
+
+app.use("/api/cursos", cursoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Geek de Boa API iniciada na porta ${PORT}`);
