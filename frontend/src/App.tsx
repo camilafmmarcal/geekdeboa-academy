@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import PaginaProvisoria from "./pages/PaginaProvisoria";
 import EuCapacito from "./pages/EuCapacito";
 import CursoDetalhes from "./pages/CursoDetalhes";
+import RecursoDetalhes from "./pages/RecursoDetalhes";
 
 import "./App.css";
 import Cursos from "./pages/Cursos";
@@ -20,6 +21,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+        <Route
+  path="recursos/:slug"
+  element={<RecursoDetalhes />}
+/>
 
         <Route
   path="eu-capacito"
