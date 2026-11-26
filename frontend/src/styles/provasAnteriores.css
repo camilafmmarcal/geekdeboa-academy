@@ -1,0 +1,253 @@
+
+.provas-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.provas-hero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #102a63, #1769d2);
+  color: white;
+}
+
+.provas-hero svg {
+  flex-shrink: 0;
+}
+
+.provas-hero h2 {
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+.provas-hero p {
+  color: #e0edff;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.provas-filtros {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+}
+
+.provas-filtros > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.provas-filtros label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.provas-filtros select,
+.provas-busca {
+  height: 46px;
+  width: 100%;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--background);
+  color: var(--text);
+}
+
+.provas-busca {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.provas-busca input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+}
+
+.provas-contagem {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.provas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.prova-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.prova-card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px;
+  background: #102a63;
+  color: white;
+}
+
+.prova-ano {
+  border-radius: 7px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.prova-card-conteudo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 15px;
+  padding: 22px;
+}
+
+.prova-card h2 {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.prova-card h3 {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.prova-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.prova-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.prova-tags span {
+  background: #e8f0ff;
+  color: #1769d2;
+  padding: 6px 9px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.prova-documentos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.prova-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #1769d2;
+  color: #1769d2;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.prova-link:first-child {
+  color: white;
+  background: #1769d2;
+}
+
+.prova-link:hover {
+  background: #e8f0ff;
+  color: #102a63;
+}
+
+.prova-link:first-child:hover {
+  background: #102a63;
+  color: white;
+}
+
+.prova-fonte {
+  border-color: var(--border);
+}
+
+.provas-orientacoes {
+  padding: 26px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.provas-orientacoes h2 {
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-size: 21px;
+}
+
+.provas-orientacoes ol {
+  padding-left: 22px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.provas-aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  background: #e8f0ff;
+  color: #102a63;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.provas-aviso svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
+  .provas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .provas-grid,
+  .provas-filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .provas-hero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 23px;
+  }
+}

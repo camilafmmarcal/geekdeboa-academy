@@ -11,7 +11,8 @@ import {
   Code2,
   Server,
   BookOpenCheck,
-  CodeXml
+  CodeXml, 
+  Files
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -25,6 +26,7 @@ const grupos = [
       { nome: "Cursos", rota: "/cursos", icone: GraduationCap },
       { nome: "Banco de questões", rota: "/questoes", icone: BookOpen },
       { nome: "Simulados", rota: "/simulados", icone: ClipboardList },
+      { nome: "Provas anteriores", rota: "/provas-anteriores", icone: Files},
       { nome: "Desempenho", rota: "/desempenho", icone: ChartColumn }
     ]
   },

@@ -11,6 +11,8 @@ import PaginaProvisoria from "./pages/PaginaProvisoria";
 import EuCapacito from "./pages/EuCapacito";
 import CursoDetalhes from "./pages/CursoDetalhes";
 import RecursoDetalhes from "./pages/RecursoDetalhes";
+import ProvasAnteriores from "./pages/ProvasAnteriores";
+import Questoes from "./pages/Questoes";
 
 import "./App.css";
 import Cursos from "./pages/Cursos";
@@ -30,7 +32,10 @@ export default function App() {
   path="eu-capacito"
   element={<EuCapacito />}
 />
-
+<Route
+  path="provas-anteriores"
+  element={<ProvasAnteriores />}
+/>
           <Route index element={<Dashboard />} />
 
           <Route path="cursos" element={<Cursos />} />
@@ -38,15 +43,7 @@ export default function App() {
   path="cursos/:id"
   element={<CursoDetalhes />}
 />
-          <Route
-            path="questoes"
-            element={
-              <PaginaProvisoria
-                titulo="Banco de questões"
-                descricao="Pratique questões de tecnologia."
-              />
-            }
-          />
+          <Route path="questoes" element={<Questoes />} />
 
           <Route
             path="simulados"
