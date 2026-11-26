@@ -109,7 +109,7 @@ export default function CourseCard({ curso }: Props) {
   const instituicao =
     identificarInstituicao(curso.link);
 
-  const possuiModulos = [2, 4].includes(curso.id);
+  const possuiModulos = curso.total_modulos > 0;
 
   let linkSeguro: string | null = null;
 
@@ -195,12 +195,13 @@ export default function CourseCard({ curso }: Props) {
 
 
         
+
 {possuiModulos ? (
   <Link
     to={`/cursos/${curso.id}`}
     className="course-button"
   >
-    Ver módulos do curso
+    Ver {curso.total_modulos} módulos
     <Layers size={16} />
   </Link>
 ) : linkSeguro ? (
@@ -218,6 +219,7 @@ export default function CourseCard({ curso }: Props) {
     Link indisponível
   </span>
 )}
+
 
       </div>
     </article>

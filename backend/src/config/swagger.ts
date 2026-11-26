@@ -273,8 +273,9 @@ const swaggerDocument = {
         tags: ["Cursos"],
         summary: "Listar recursos educacionais ativos",
         description: `
-          Permite pesquisar cursos por nome,
-          descrição, categoria e nível.
+          description:
+  "Lista cursos ativos com filtros por nome, categoria e nível. 
+  Cada registro informa total_modulos para identificar cursos modulares.",
         `,
         parameters: [
           {
@@ -334,6 +335,80 @@ const swaggerDocument = {
         }
       }
     },
+
+
+"/api/cursos/{id}/modulos": {
+  get: {
+    tags: ["Cursos"],
+    summary: "Listar módulos de um curso",
+    description:
+      "Consulta módulos ativos, ordenados pela sequência de estudo.",
+    parameters: [
+      {
+        name: "id",
+        in: "path",
+        required: true,
+        schema: {
+          type: "integer",
+          minimum: 1,
+          example: 4
+        }
+      }
+    ],
+    responses: {
+      "200": {
+        description: "Módulos retornados com sucesso",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                total: {
+                  type: "integer",
+                  example: 5
+                },
+                dados: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "integer" },
+                      curso_id: { type: "integer" },
+                      titulo: { type: "string" },
+                      ordem: { type: "integer" },
+                      descricao: {
+                        type: "string",
+                        nullable: true
+                      },
+                      carga_horaria: {
+                        type: "integer",
+                        nullable: true
+                      },
+                      link: {
+                        type: "string",
+                        format: "uri"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        description: "Identificador inválido"
+      },
+      "404": {
+        description: "Curso inexistente ou inativo"
+      },
+      "500": {
+        description: "Erro interno do servidor"
+      }
+    }
+  }
+},
+
 
     "/api/cursos/{id}": {
       get: {

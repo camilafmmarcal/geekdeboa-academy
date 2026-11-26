@@ -12,6 +12,7 @@ export interface Curso {
   descricao: string | null;
   link: string;
   carga_horaria: number | null;
+  total_modulos: number;
 }
 
 export interface CategoriaCurso {

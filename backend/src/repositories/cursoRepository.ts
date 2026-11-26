@@ -16,6 +16,7 @@ export interface Curso extends RowDataPacket {
   descricao: string | null;
   link: string;
   carga_horaria: number | null;
+  total_modulos: number;
 }
 
 export interface CursoModulo extends RowDataPacket {
@@ -52,64 +53,79 @@ async listarModulos(cursoId: number): Promise<CursoModulo[]> {
   return rows;
 }
 
-  async listar(filtros: FiltrosCurso): Promise<Curso[]> {
-    const condicoes = ["ativo = TRUE"];
-    const valores: string[] = [];
+  
 
-    if (filtros.categoria) {
-      condicoes.push("categoria = ?");
-      valores.push(filtros.categoria);
-    }
+async listar(filtros: FiltrosCurso): Promise<Curso[]> {
+  const condicoes = ["c.ativo = TRUE"];
+  const valores: string[] = [];
 
-    if (filtros.nivel) {
-      condicoes.push("nivel = ?");
-      valores.push(filtros.nivel);
-    }
-
-    if (filtros.busca) {
-      condicoes.push("(nome LIKE ? OR descricao LIKE ?)");
-
-      const termo = `%${filtros.busca}%`;
-
-      valores.push(termo, termo);
-    }
-
-    const [rows] = await pool.execute<Curso[]>(
-      `SELECT
-         id,
-         nome,
-         categoria,
-         nivel,
-         descricao,
-         link,
-         carga_horaria
-       FROM cursos
-       WHERE ${condicoes.join(" AND ")}
-       ORDER BY categoria, nome`,
-      valores
-    );
-
-    return rows;
+  if (filtros.categoria) {
+    condicoes.push("c.categoria = ?");
+    valores.push(filtros.categoria);
   }
 
-  async buscarPorId(id: number): Promise<Curso | null> {
-    const [rows] = await pool.execute<Curso[]>(
-      `SELECT
-         id,
-         nome,
-         categoria,
-         nivel,
-         descricao,
-         link,
-         carga_horaria
-       FROM cursos
-       WHERE id = ?
-         AND ativo = TRUE`,
-      [id]
+  if (filtros.nivel) {
+    condicoes.push("c.nivel = ?");
+    valores.push(filtros.nivel);
+  }
+
+  if (filtros.busca) {
+    condicoes.push(
+      "(c.nome LIKE ? OR c.descricao LIKE ?)"
     );
 
-    return rows[0] ?? null;
+    const termo = `%${filtros.busca}%`;
+    valores.push(termo, termo);
   }
+
+  const [rows] = await pool.execute<Curso[]>(
+    `SELECT
+       c.id,
+       c.nome,
+       c.categoria,
+       c.nivel,
+       c.descricao,
+       c.link,
+       c.carga_horaria,
+       (
+         SELECT COUNT(*)
+         FROM curso_modulos m
+         WHERE m.curso_id = c.id
+           AND m.ativo = TRUE
+       ) AS total_modulos
+     FROM cursos c
+     WHERE ${condicoes.join(" AND ")}
+     ORDER BY c.categoria, c.nome`,
+    valores
+  );
+
+  return rows;
+}
+
+async buscarPorId(id: number): Promise<Curso | null> {
+  const [rows] = await pool.execute<Curso[]>(
+    `SELECT
+       c.id,
+       c.nome,
+       c.categoria,
+       c.nivel,
+       c.descricao,
+       c.link,
+       c.carga_horaria,
+       (
+         SELECT COUNT(*)
+         FROM curso_modulos m
+         WHERE m.curso_id = c.id
+           AND m.ativo = TRUE
+       ) AS total_modulos
+     FROM cursos c
+     WHERE c.id = ?
+       AND c.ativo = TRUE`,
+    [id]
+  );
+
+  return rows[0] ?? null;
+}
 
   async listarCategorias() {
     const [rows] = await pool.query<RowDataPacket[]>(
