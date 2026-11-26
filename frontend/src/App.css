@@ -584,3 +584,102 @@
     padding-top: 12px;
   }
 }
+.sidebar-external-icon {
+  margin-left: auto;
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.sidebar-group {
+  margin-bottom: 20px;
+}
+
+.sidebar-group + .sidebar-group {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+  .sidebar-external-icon {
+    display: none;
+  }
+
+  .sidebar-group {
+    margin-bottom: 12px;
+  }
+}
+
+/* =====================================
+   DASHBOARD DINAMICO
+===================================== */
+
+.dashboard-message {
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.dashboard-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: #fff7e6;
+  border: 1px solid #f5d89a;
+  border-radius: var(--radius);
+  color: #854d0e;
+}
+
+.dashboard-alert > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dashboard-alert > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-alert strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.dashboard-alert p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.dashboard-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #d6a960;
+  border-radius: 8px;
+  background: white;
+  color: #854d0e;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.dashboard-refresh:hover {
+  background: #ffedd5;
+}
+
+@media (max-width: 650px) {
+  .dashboard-alert {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-refresh {
+    width: 100%;
+  }
+}

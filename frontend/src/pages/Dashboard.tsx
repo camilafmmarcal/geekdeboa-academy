@@ -1,4 +1,7 @@
 
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   GraduationCap,
   BookOpen,
@@ -7,57 +10,117 @@ import {
   ArrowRight,
   Code2,
   BrainCircuit,
-  ShieldCheck
+  ShieldCheck,
+  AlertCircle,
+  RefreshCw
 } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { dashboardService } from "../services/dashboardService";
 
-const indicadores = [
+import type { DadosDashboard } from "../types/dashboard";
+
+const indicadoresVisuais = [
   {
-    titulo: "Cursos e recursos",
-    valor: 16,
+    chave: "cursos",
+    titulo: "Cursos disponíveis",
     icone: GraduationCap,
     cor: "blue"
   },
   {
+    chave: "disciplinas",
     titulo: "Disciplinas",
-    valor: 9,
     icone: BookOpen,
     cor: "purple"
   },
   {
+    chave: "assuntos",
     titulo: "Assuntos",
-    valor: 14,
     icone: Layers,
     cor: "cyan"
   },
   {
-    titulo: "Simulados",
-    valor: 1,
+    chave: "simulados",
+    titulo: "Simulados publicados",
     icone: ClipboardList,
     cor: "green"
   }
-];
+] as const;
 
 const trilhas = [
   {
     titulo: "Programação",
-    descricao: "Desenvolva suas habilidades em lógica e linguagens.",
+    descricao:
+      "Desenvolva suas habilidades em lógica e linguagens.",
     icone: Code2
   },
   {
     titulo: "Inteligência Artificial",
-    descricao: "Explore conceitos e aplicações de IA.",
+    descricao:
+      "Explore conceitos e aplicações de IA.",
     icone: BrainCircuit
   },
   {
     titulo: "Segurança da Informação",
-    descricao: "Aprenda fundamentos de proteção digital.",
+    descricao:
+      "Aprenda fundamentos de proteção digital.",
     icone: ShieldCheck
   }
 ];
 
 export default function Dashboard() {
+  const [dados, setDados] =
+    useState<DadosDashboard | null>(null);
+
+  const [carregando, setCarregando] = useState(true);
+
+  const [erro, setErro] = useState("");
+
+  const [atualizacao, setAtualizacao] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    setCarregando(true);
+    setErro("");
+
+    dashboardService
+      .carregar(controller.signal)
+      .then((resultado) => {
+        if (!controller.signal.aborted) {
+          setDados(resultado);
+        }
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          setErro(
+            "Não foi possível carregar os dados do Dashboard."
+          );
+
+          setDados(null);
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setCarregando(false);
+        }
+      });
+
+    return () => controller.abort();
+  }, [atualizacao]);
+
+  const areasDisponiveis = trilhas.filter((trilha) =>
+    dados?.categoriasDisponiveis?.includes(trilha.titulo)
+  );
+
+  const indicadores = indicadoresVisuais.map((item) => ({
+    ...item,
+    valor: dados?.indicadores[item.chave] ?? null
+  }));
+
+  function atualizar() {
+    setAtualizacao((valor) => valor + 1);
+  }
+
   return (
     <div className="dashboard">
 
@@ -78,18 +141,24 @@ export default function Dashboard() {
           </h2>
 
           <p>
-            Explore recursos educacionais, pratique
-            questões e prepare-se para concursos
-            da área de tecnologia.
+            Explore recursos educacionais,
+            pratique questões e prepare-se
+            para concursos da área de tecnologia.
           </p>
 
           <div className="hero-buttons">
-            <Link to="/cursos" className="btn-primary">
+            <Link
+              to="/cursos"
+              className="btn-primary"
+            >
               Explorar cursos
               <ArrowRight size={18} />
             </Link>
 
-            <Link to="/questoes" className="btn-outline">
+            <Link
+              to="/questoes"
+              className="btn-outline"
+            >
               Praticar questões
             </Link>
           </div>
@@ -104,18 +173,30 @@ export default function Dashboard() {
         />
       </section>
 
-      <section className="stats-grid">
+      <section
+        className="stats-grid"
+        aria-label="Indicadores da plataforma"
+        aria-busy={carregando}
+      >
         {indicadores.map(
-          ({ titulo, valor, icone: Icone, cor }) => (
-            <article className="stat-card" key={titulo}>
+          ({ chave, titulo, valor, icone: Icone, cor }) => (
+            <article
+              className="stat-card"
+              key={chave}
+            >
               <div className={`stat-icon ${cor}`}>
                 <Icone size={24} />
               </div>
 
               <div>
                 <strong className="stat-value">
-                  {valor}
+                  {carregando
+                    ? "…"
+                    : valor === null
+                      ? "—"
+                      : valor}
                 </strong>
+
                 <p>{titulo}</p>
               </div>
             </article>
@@ -123,49 +204,110 @@ export default function Dashboard() {
         )}
       </section>
 
+      {carregando && (
+        <div
+          className="dashboard-message"
+          role="status"
+        >
+          Consultando indicadores da plataforma...
+        </div>
+      )}
+
+      {!carregando && (erro || Boolean(dados?.avisos.length)) && (
+        <div
+          className="dashboard-alert"
+          role="alert"
+        >
+          <AlertCircle size={21} />
+
+          <div>
+            <strong>
+              Alguns dados não puderam ser carregados
+            </strong>
+
+            <p>
+              {erro ||
+                dados?.avisos.join(" ")}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="dashboard-refresh"
+            onClick={atualizar}
+          >
+            <RefreshCw size={16} />
+            Atualizar
+          </button>
+        </div>
+      )}
+
       <section className="learning-section">
+
         <div className="section-heading">
           <div>
             <h2>Explore áreas de conhecimento</h2>
-            <p>Encontre conteúdos para sua formação.</p>
+
+            <p>
+              Encontre conteúdos disponíveis
+              em nosso catálogo.
+            </p>
           </div>
 
-          <Link to="/cursos" className="text-link">
+          <Link
+            to="/cursos"
+            className="text-link"
+          >
             Ver catálogo
             <ArrowRight size={16} />
           </Link>
         </div>
 
-        <div className="learning-grid">
-          {trilhas.map(
-            ({ titulo, descricao, icone: Icone }) => (
-              <article className="learning-card" key={titulo}>
+        {!carregando && areasDisponiveis.length > 0 ? (
 
-                <div className="learning-icon">
-                  <Icone size={32} />
-                </div>
-
-                <h3>{titulo}</h3>
-                <p>{descricao}</p>
-
-                <Link
-                  to={`/cursos?categoria=${encodeURIComponent(titulo)}`}
-                  className="text-link"
+          <div className="learning-grid">
+            {areasDisponiveis.map(
+              ({ titulo, descricao, icone: Icone }) => (
+                <article
+                  className="learning-card"
+                  key={titulo}
                 >
-                  Explorar área
-                  <ArrowRight size={16} />
-                </Link>
+                  <div className="learning-icon">
+                    <Icone size={32} />
+                  </div>
 
-              </article>
-            )
-          )}
-        </div>
+                  <h3>{titulo}</h3>
+                  <p>{descricao}</p>
+
+                  <Link
+                    to={`/cursos?categoria=${encodeURIComponent(titulo)}`}
+                    className="text-link"
+                  >
+                    Explorar área
+                    <ArrowRight size={16} />
+                  </Link>
+                </article>
+              )
+            )}
+          </div>
+
+        ) : !carregando && dados?.categoriasDisponiveis !== null ? (
+
+          <div className="dashboard-message">
+            Nenhuma das áreas destacadas possui
+            cursos ativos no momento.
+            Consulte o catálogo completo.
+          </div>
+
+        ) : null}
+
       </section>
 
       <div className="demo-notice">
         Ambiente acadêmico demonstrativo.
-        Os indicadores serão integrados à API
-        na próxima etapa.
+        Os indicadores são consultados na API REST
+        e representam o conteúdo cadastrado,
+        não o desempenho individual do estudante.
       </div>
 
     </div>
