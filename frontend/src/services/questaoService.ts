@@ -29,6 +29,14 @@ export interface QuestaoDetalhe extends QuestaoResumo {
   }[];
 }
 
+export interface ResultadoResposta {
+  questao_id: number;
+  alternativa_id: number;
+  correta: boolean;
+  letra_correta: string;
+  comentario: string | null;
+}
+
 export interface FiltrosQuestoes {
   disciplina_id?: number;
   assunto_id?: number;
@@ -87,5 +95,19 @@ export const questaoService = {
     );
 
     return resposta.data;
-  }
+  },
+
+async responder(
+  questaoId: number,
+  alternativaId: number
+): Promise<ResultadoResposta> {
+  const resposta = await api.post<ResultadoResposta>(
+    `/questoes/${questaoId}/responder`,
+    {
+      alternativa_id: alternativaId
+    }
+  );
+
+  return resposta.data;
+}
 };

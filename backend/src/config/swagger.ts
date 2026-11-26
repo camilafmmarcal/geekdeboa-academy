@@ -178,6 +178,78 @@ const swaggerDocument = {
       }
     },
 
+"/api/questoes/{id}/responder": {
+  post: {
+    tags: ["Questões"],
+    summary: "Responder uma questão no modo estudo",
+    description:
+      "Valida uma alternativa e retorna o gabarito comentado. Não registra tentativa ou desempenho.",
+    parameters: [
+      {
+        name: "id",
+        in: "path",
+        required: true,
+        schema: {
+          type: "integer",
+          minimum: 1
+        }
+      }
+    ],
+    requestBody: {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["alternativa_id"],
+            properties: {
+              alternativa_id: {
+                type: "integer",
+                minimum: 1,
+                example: 1
+              }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      "200": {
+        description: "Resposta corrigida",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                questao_id: { type: "integer" },
+                alternativa_id: { type: "integer" },
+                correta: { type: "boolean" },
+                letra_correta: { type: "string" },
+                comentario: {
+                  type: "string",
+                  nullable: true
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        description: "Parâmetros inválidos"
+      },
+      "404": {
+        description: "Questão não encontrada"
+      },
+      "422": {
+        description: "Alternativa não pertence à questão"
+      },
+      "500": {
+        description: "Erro interno"
+      }
+    }
+  }
+},
+
     "/api/questoes/{id}": {
       get: {
         tags: ["Questões"],

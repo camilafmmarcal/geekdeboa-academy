@@ -25,6 +25,19 @@ interface Alternativa extends RowDataPacket {
   texto: string;
 }
 
+interface CorrecaoRow extends RowDataPacket {
+  alternativa_id: number;
+  letra: string;
+  correta: number;
+  comentario_gabarito: string | null;
+}
+
+export interface ResultadoCorrecao {
+  correta: boolean;
+  letraCorreta: string;
+  comentario: string | null;
+}
+
 export class QuestaoRepository {
   async listar(filtros: FiltrosQuestao) {
     const condicoes = ["q.status = 'PUBLICADA'"];
@@ -75,6 +88,54 @@ export class QuestaoRepository {
 
     return rows;
   }
+
+async corrigirResposta(
+  questaoId: number,
+  alternativaId: number
+): Promise<ResultadoCorrecao | null> {
+  const [rows] = await pool.execute<CorrecaoRow[]>(
+    `SELECT
+       a.id AS alternativa_id,
+       a.letra,
+       a.correta,
+       q.comentario_gabarito
+     FROM alternativas a
+     INNER JOIN questoes q
+       ON q.id = a.questao_id
+     WHERE q.id = ?
+       AND q.status = 'PUBLICADA'
+     ORDER BY a.letra`,
+    [questaoId]
+  );
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const selecionada = rows.find(
+    (alternativa) => alternativa.alternativa_id === alternativaId
+  );
+
+  if (!selecionada) {
+    return null;
+  }
+
+  const corretas = rows.filter(
+    (alternativa) => alternativa.correta === 1
+  );
+
+  if (corretas.length !== 1) {
+    throw new Error(
+      `Gabarito inconsistente na questão ${questaoId}`
+    );
+  }
+
+  return {
+    correta: selecionada.correta === 1,
+    letraCorreta: corretas[0].letra,
+    comentario: selecionada.comentario_gabarito
+  };
+}
 
   async buscarPorId(id: number) {
     const [questoes] = await pool.execute<Questao[]>(

@@ -1,6 +1,7 @@
 
 import { Request, Response } from "express";
 import { QuestaoService } from "../services/questaoService";
+import { z } from "zod";
 
 const service = new QuestaoService();
 
@@ -13,6 +14,9 @@ function inteiroPositivo(valor: unknown): number | undefined {
   const numero = Number(texto);
   return Number.isSafeInteger(numero) ? numero : NaN;
 }
+const respostaSchema = z.object({
+  alternativa_id: z.number().int().positive().safe()
+}).strict();
 
 export class QuestaoController {
   listar = async (req: Request, res: Response): Promise<void> => {
@@ -20,9 +24,7 @@ export class QuestaoController {
     const assunto_id = inteiroPositivo(req.query.assunto_id);
     const banca_id = inteiroPositivo(req.query.banca_id);
     const pagina = inteiroPositivo(req.query.pagina) ?? 1;
-
     const dificuldade = req.query.dificuldade;
-
     const ids = [disciplina_id, assunto_id, banca_id, pagina];
 
     if (ids.some(v => v !== undefined && !Number.isSafeInteger(v))) {
@@ -82,4 +84,61 @@ export class QuestaoController {
       res.status(500).json({ erro: "Erro ao consultar questão." });
     }
   };
+  responder = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const id = inteiroPositivo(req.params.id);
+
+  if (!id || !Number.isSafeInteger(id)) {
+    res.status(400).json({
+      erro: "Identificador da questão inválido."
+    });
+    return;
+  }
+
+  const validacao = respostaSchema.safeParse(req.body);
+
+  if (!validacao.success) {
+    res.status(400).json({
+      erro: "Informe um alternativa_id válido."
+    });
+    return;
+  }
+
+  try {
+    const correcao = await service.corrigirResposta(
+      id,
+      validacao.data.alternativa_id
+    );
+
+    if (correcao.status === "QUESTAO_NAO_ENCONTRADA") {
+      res.status(404).json({
+        erro: "Questão não encontrada."
+      });
+      return;
+    }
+
+    if (correcao.status === "ALTERNATIVA_INVALIDA") {
+      res.status(422).json({
+        erro: "A alternativa não pertence à questão."
+      });
+      return;
+    }
+
+    res.status(200).json({
+      questao_id: id,
+      alternativa_id: validacao.data.alternativa_id,
+      correta: correcao.resultado.correta,
+      letra_correta: correcao.resultado.letraCorreta,
+      comentario: correcao.resultado.comentario
+    });
+  } catch (error) {
+    console.error("Erro ao corrigir resposta:", error);
+
+    res.status(500).json({
+      erro: "Não foi possível corrigir a resposta."
+    });
+  }
+};
 }

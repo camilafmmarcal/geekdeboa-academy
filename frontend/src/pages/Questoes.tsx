@@ -23,6 +23,7 @@ import type {
 } from "../services/questaoService";
 
 import "../styles/questoes.css";
+import QuestaoResolver from "../components/QuestaoResolver";
 
 export default function Questoes() {
   const [disciplinas, setDisciplinas] =
@@ -47,6 +48,8 @@ export default function Questoes() {
 
   const [selecionada, setSelecionada] =
     useState<QuestaoDetalhe | null>(null);
+
+  const [abrindoId, setAbrindoId] = useState<number | null>(null);
 
   const [carregando, setCarregando] =
     useState(true);
@@ -162,19 +165,34 @@ export default function Questoes() {
     atualizacao
   ]);
 
-  async function abrirQuestao(id: number) {
-    setErro("");
-    setSelecionada(null);
 
-    try {
-      const resultado = await questaoService.buscarPorId(id);
-      setSelecionada(resultado);
-    } catch {
-      setErro(
-        "Não foi possível carregar os detalhes da questão."
-      );
-    }
+async function abrirQuestao(id: number) {
+  if (abrindoId !== null) return;
+
+  // Fecha a questão se o estudante clicar novamente.
+  if (selecionada?.id === id) {
+    setSelecionada(null);
+    return;
   }
+
+  setErro("");
+  setSelecionada(null);
+  setAbrindoId(id);
+
+  try {
+    const resultado = await questaoService.buscarPorId(id);
+    setSelecionada(resultado);
+  } catch (error) {
+    console.error("Erro ao abrir questão:", error);
+
+    setErro(
+      "Não foi possível carregar as alternativas. " +
+      "Verifique a conexão com a API."
+    );
+  } finally {
+    setAbrindoId(null);
+  }
+}
 
   function limparFiltros() {
     setDisciplinaId("");
@@ -326,12 +344,28 @@ export default function Questoes() {
               <p>{questao.enunciado}</p>
 
               <button
-                className="questao-abrir"
-                type="button"
-                onClick={() => abrirQuestao(questao.id)}
-              >
-                Ver questão e alternativas
-              </button>
+  className="questao-abrir"
+  type="button"
+  disabled={abrindoId !== null}
+  onClick={() => abrirQuestao(questao.id)}
+>
+  {abrindoId === questao.id
+    ? "Carregando alternativas..."
+    : selecionada?.id === questao.id
+      ? "Fechar questão"
+      : "Responder questão"}
+</button>
+{selecionada?.id === questao.id && (
+  <section
+    className="questao-resolucao-inline"
+    aria-label={`Resolução da questão ${questao.id}`}
+  >
+    <QuestaoResolver
+      key={selecionada.id}
+      questao={selecionada}
+    />
+  </section>
+)}
             </article>
           ))}
         </section>
@@ -362,45 +396,28 @@ export default function Questoes() {
         </button>
       </nav>
 
-      {selecionada && (
-        <section
-          className="questao-detalhe"
-          aria-label="Detalhes da questão"
-        >
-          <div className="questao-detalhe-topo">
-            <h2>Questão #{selecionada.id}</h2>
+      
+{selecionada && (
+  <section
+    className="questao-detalhe"
+    aria-label="Resolução da questão"
+  >
+    <div className="questao-detalhe-topo">
+      <h2>Questão #{selecionada.id}</h2>
 
-            <button
-              type="button"
-              onClick={() => setSelecionada(null)}
-            >
-              Fechar
-            </button>
-          </div>
-
-          <p className="questao-enunciado">
-            {selecionada.enunciado}
-          </p>
-
-          <div className="questao-alternativas">
-            {selecionada.alternativas.map((alternativa) => (
-              <div
-                className="questao-alternativa"
-                key={alternativa.id}
-              >
-                <strong>{alternativa.letra}</strong>
-                <span>{alternativa.texto}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="demo-notice">
-            Consulta demonstrativa. O envio de
-            respostas e a correção automática
-            serão implementados em outra etapa.
-          </div>
-        </section>
-      )}
+      <button
+        type="button"
+        onClick={() => setSelecionada(null)}
+      >
+        Fechar
+      </button>
     </div>
+
+    <QuestaoResolver
+      key={selecionada.id}
+      questao={selecionada}
+    />
+  </section>
+)}</div>
   );
 }
