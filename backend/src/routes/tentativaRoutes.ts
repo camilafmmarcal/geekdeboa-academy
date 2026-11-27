@@ -780,6 +780,17 @@ router.post(
 );
 
 // =====================================================
+// POST /api/tentativas/:id/desistir
+// Encerra somente uma tentativa pertencente ao aluno.
+// Não atribui nota e não apaga o histórico.
+// =====================================================
+
+router.post(
+  "/:id/desistir",
+  async (
+    req: RequisicaoAutenticada,
+    res: Response
+  ): Promise<void> => {
 // =====================================================
 // POST /api/tentativas/:id/desistir
 // =====================================================
@@ -791,11 +802,59 @@ router.post(
 
     const tentativaId = idValido(req.params.id);
     if (tentativaId === null) {
+      res.status(400).json({ erro: "Identificador da tentativa inválido." });
       res.status(400).json({ erro: "Identificador inválido." });
       return;
     }
 
     try {
+      const [atualizacao] = await pool.execute<ResultSetHeader>(
+        `UPDATE tentativas
+         SET status = 'DESISTIDA',
+             finalizado_em = NOW(),
+             acertos = NULL
+         WHERE id = ?
+           AND usuario_id = ?
+           AND status = 'EM_ANDAMENTO'
+           AND EXISTS (
+             SELECT 1 FROM usuarios u
+             WHERE u.id = ? AND u.ativo = TRUE
+           )`,
+        [tentativaId, usuarioId, usuarioId]
+      );
+
+      if (atualizacao.affectedRows !== 1) {
+        const [encontradas] = await pool.execute<RowDataPacket[]>(
+          `SELECT t.status
+           FROM tentativas t
+           INNER JOIN usuarios u ON u.id = t.usuario_id
+           WHERE t.id = ? AND t.usuario_id = ? AND u.ativo = TRUE
+           LIMIT 1`,
+          [tentativaId, usuarioId]
+        );
+
+        if (!encontradas.length) {
+          res.status(404).json({ erro: "Tentativa não encontrada." });
+          return;
+        }
+
+        res.status(409).json({ erro: "Esta tentativa já foi encerrada." });
+        return;
+      }
+
+      res.status(200).json({
+        tentativa_id: tentativaId,
+        status: "DESISTIDA",
+        mensagem: "Tentativa encerrada sem pontuação."
+      });
+    } catch (error) {
+      console.error("Erro ao desistir da tentativa:", error);
+      res.status(500).json({ erro: "Não foi possível desistir da tentativa." });
+    }
+  }
+);
+
+// =====================================================
       const [resultado] = await pool.execute<ResultSetHeader>(
         `UPDATE tentativas t
          INNER JOIN usuarios u ON u.id = t.usuario_id

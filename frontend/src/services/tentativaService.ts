@@ -85,6 +85,7 @@ export const tentativaService = {
       {},
       { headers: autorizacao() }
     );
+
     return resposta.data;
   },
 

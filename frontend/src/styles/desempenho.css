@@ -317,4 +317,8 @@
   }
 }
 
+.desempenho-status.desistida {
+  background: #e2e8f0;
+  color: #334155;
+}
 .desempenho-status.desistida { background: #e0e7ff; color: #3730a3; }

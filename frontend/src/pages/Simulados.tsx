@@ -502,6 +502,13 @@ export default function Simulados() {
   // VOLTAR AO CATALOGO
   // ---------------------------------------------------
 
+  function voltarCatalogo() {
+    // Não é permitido abandonar uma tentativa ativa sem
+    // comunicar a desistência ao backend.
+    if (fase === "prova") return;
+
+    limparEVoltarCatalogo();
+  }
   async function desistirSimulado() {
     const tentativaId = tentativaIdRef.current;
     if (fase !== "prova" || tentativaId === null ||
@@ -528,8 +535,8 @@ export default function Simulados() {
 
   function voltarCatalogo() {
 
+  function limparEVoltarCatalogo() {
     requisicaoAberturaRef.current++;
-
     setFase("catalogo");
     setSimulado(null);
     setIndice(0);
@@ -539,14 +546,44 @@ export default function Simulados() {
     setErro("");
     setAbrindoId(null);
     setConfirmouInstrucoes(false);
-
     tentativaIdRef.current = null;
     prazoRef.current = null;
-
     bloqueioRef.current = false;
     autoFinalizacaoRef.current = false;
   }
 
+  async function desistirSimulado() {
+    if (fase !== "prova" || finalizando || desistindo || bloqueioRef.current) {
+      return;
+    }
+
+    const tentativaId = tentativaIdRef.current;
+    if (tentativaId === null) {
+      setErro("Não foi possível identificar esta tentativa.");
+      return;
+    }
+
+    if (!window.confirm(
+      "Deseja desistir do simulado? As respostas não serão corrigidas " +
+      "e a tentativa será registrada como desistida."
+    )) return;
+
+    bloqueioRef.current = true;
+    setDesistindo(true);
+    setErro("");
+
+    try {
+      await tentativaService.desistir(tentativaId);
+      limparEVoltarCatalogo();
+    } catch (error) {
+      bloqueioRef.current = false;
+      setErro(mensagemErro(error, "Não foi possível registrar a desistência."));
+    } finally {
+      setDesistindo(false);
+    }
+  }
+
+  // ---------------------------------------------------
   // ---------------------------------------------------
   // REFAZER SIMULADO
   // ---------------------------------------------------
@@ -1101,6 +1138,15 @@ export default function Simulados() {
               >
                 Próxima
                 <ArrowRight size={17} />
+              </button>
+
+              <button
+                type="button"
+                className="simulados-secundario"
+                disabled={finalizando || desistindo}
+                onClick={() => void desistirSimulado()}
+              >
+                {desistindo ? "Registrando desistência..." : "Desistir do simulado"}
               </button>
 
               <button
