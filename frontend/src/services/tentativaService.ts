@@ -25,7 +25,7 @@ export interface ResultadoTentativa {
 export interface HistoricoTentativa {
   id: number;
   simulado: string;
-  status: "EM_ANDAMENTO" | "FINALIZADA" | "EXPIRADA";
+  status: "EM_ANDAMENTO" | "FINALIZADA" | "EXPIRADA" | "DESISTIDA";
   iniciado_em: string;
   finalizado_em: string | null;
   acertos: number | null;
@@ -69,6 +69,20 @@ export const tentativaService = {
     const resposta = await api.post<ResultadoTentativa>(
       `/tentativas/${tentativaId}/finalizar`,
       { respostas },
+      { headers: autorizacao() }
+    );
+
+    return resposta.data;
+  },
+
+  async desistir(tentativaId: number) {
+    const resposta = await api.post<{
+      tentativa_id: number;
+      status: "DESISTIDA";
+      mensagem: string;
+    }>(
+      `/tentativas/${tentativaId}/desistir`,
+      {},
       { headers: autorizacao() }
     );
 
