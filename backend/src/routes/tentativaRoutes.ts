@@ -30,7 +30,7 @@ interface TentativaRow extends RowDataPacket {
   id: number;
   usuario_id: number;
   simulado_id: number;
-  status: "EM_ANDAMENTO" | "FINALIZADA" | "EXPIRADA";
+  status: "EM_ANDAMENTO" | "FINALIZADA" | "EXPIRADA" | "DESISTIDA";
   total_questoes: number;
   duracao_minutos: number;
   segundos_decorridos: number;
@@ -780,6 +780,52 @@ router.post(
 );
 
 // =====================================================
+// =====================================================
+// POST /api/tentativas/:id/desistir
+// =====================================================
+router.post(
+  "/:id/desistir",
+  async (req: RequisicaoAutenticada, res: Response): Promise<void> => {
+    const usuarioId = obterUsuarioId(req, res);
+    if (usuarioId === null) return;
+
+    const tentativaId = idValido(req.params.id);
+    if (tentativaId === null) {
+      res.status(400).json({ erro: "Identificador inválido." });
+      return;
+    }
+
+    try {
+      const [resultado] = await pool.execute<ResultSetHeader>(
+        `UPDATE tentativas t
+         INNER JOIN usuarios u ON u.id = t.usuario_id
+         SET t.status = 'DESISTIDA',
+             t.finalizado_em = NOW(),
+             t.acertos = NULL
+         WHERE t.id = ?
+           AND t.usuario_id = ?
+           AND t.status = 'EM_ANDAMENTO'
+           AND u.ativo = TRUE`,
+        [tentativaId, usuarioId]
+      );
+      if (resultado.affectedRows !== 1) {
+        res.status(409).json({
+          erro: "Tentativa não encontrada ou já encerrada."
+        });
+        return;
+      }
+      res.status(200).json({
+        tentativa_id: tentativaId,
+        status: "DESISTIDA",
+        mensagem: "Desistência registrada."
+      });
+    } catch (error) {
+      console.error("Erro ao desistir:", error);
+      res.status(500).json({ erro: "Falha ao registrar desistência." });
+    }
+  }
+);
+
 // GET /api/tentativas
 // HISTORICO DO ESTUDANTE
 // =====================================================
