@@ -1,0 +1,43 @@
+﻿codigo;disciplina;assunto;dificuldade;correta;justificativa
+Q001;Programação;POO;FACIL;A;Herança permite que uma classe derivada reutilize e especialize características da classe base.
+Q002;Programação;POO;MEDIA;B;A sobrescrita permite que a implementação executada dependa do tipo concreto do objeto.
+Q003;Programação;POO;MEDIA;D;Classes abstratas podem compartilhar implementação e definir contratos abstratos, sem instanciação direta.
+Q004;Programação;JavaScript;FACIL;B;"const impede reatribuição do vínculo; não torna imutável o conteúdo de objetos."
+Q005;Programação;JavaScript;MEDIA;C;O operador === compara valor e tipo, sem coerção de tipos como a realizada por ==.
+Q006;Programação;JavaScript;MEDIA;E;map constrói um novo array a partir da transformação de cada elemento.
+Q007;Programação;Estruturas de Dados;FACIL;B;Uma pilha segue LIFO: o último elemento inserido é o primeiro removido.
+Q008;Programação;Estruturas de Dados;FACIL;A;Na fila, o primeiro elemento inserido é o primeiro a sair.
+Q009;Programação;Estruturas de Dados;MEDIA;D;"Em condições usuais, a busca por chave em uma tabela hash tem custo médio constante; colisões podem degradar o desempenho."
+Q010;Banco de Dados;Modelagem Entidade-Relacionamento;FACIL;B;A cardinalidade 1:N indica que uma ocorrência de um lado pode relacionar-se a muitas do outro.
+Q011;Banco de Dados;Modelagem Entidade-Relacionamento;MEDIA;C;A chave estrangeira expressa o vínculo referencial entre tabelas.
+Q012;Banco de Dados;Modelagem Entidade-Relacionamento;MEDIA;E;Relacionamentos N:N são normalmente implementados por tabela associativa que referencia ambas as entidades.
+Q013;Banco de Dados;SQL e Consultas;FACIL;A;WHERE restringe linhas antes de operações de agrupamento e agregação.
+Q014;Banco de Dados;SQL e Consultas;MEDIA;D;HAVING aplica condições aos grupos após o agrupamento, frequentemente usando funções de agregação.
+Q015;Banco de Dados;SQL e Consultas;MEDIA;C;LEFT JOIN preserva as linhas da tabela à esquerda e usa NULL para dados sem correspondência do lado direito.
+Q016;Engenharia de Software;Requisitos de Software;FACIL;B;Tempo de resposta é um atributo de qualidade, portanto um requisito não funcional mensurável.
+Q017;Engenharia de Software;Requisitos de Software;MEDIA;E;Um requisito testável define resultados observáveis e critérios claros para confirmar seu atendimento.
+Q018;Engenharia de Software;Requisitos de Software;MEDIA;A;Rastreabilidade conecta cada requisito às fontes, artefatos de solução e evidências de verificação.
+Q019;Engenharia de Software;Diagramas UML;FACIL;D;O diagrama de classes descreve a estrutura estática do sistema e seus relacionamentos.
+Q020;Engenharia de Software;Diagramas UML;MEDIA;C;O diagrama de sequência apresenta interações e mensagens ao longo do tempo.
+Q021;Engenharia de Software;Diagramas UML;MEDIA;B;"Atores representam papéis externos que interagem com o sistema; podem ser pessoas ou outros sistemas."
+Q022;Redes de Computadores;TCP/IP;FACIL;E;DNS permite resolver nomes de domínio em registros, incluindo endereços IP.
+Q023;Redes de Computadores;TCP/IP;MEDIA;A;TCP utiliza números de sequência, confirmações e retransmissões para proporcionar entrega confiável e ordenada.
+Q024;Redes de Computadores;TCP/IP;MEDIA;D;UDP não oferece por si só garantia de entrega, ordenação ou estabelecimento de conexão.
+Q025;Segurança da Informação;Autenticação e Autorização;FACIL;C;"Autenticação verifica quem acessa; autorização verifica o que essa identidade pode fazer."
+Q026;Segurança da Informação;Autenticação e Autorização;MEDIA;B;O menor privilégio limita acessos às permissões indispensáveis para cada função.
+Q027;Segurança da Informação;Autenticação e Autorização;MEDIA;E;"Senha é fator de conhecimento; um autenticador vinculado ao dispositivo pode fornecer fator de posse."
+Q028;Qualidade de Software;Testes Unitários;FACIL;A;Testes unitários verificam componentes ou unidades de comportamento, frequentemente isolando dependências.
+Q029;Qualidade de Software;Testes Unitários;MEDIA;D;Determinismo facilita a reprodução de falhas e a confiança nos resultados.
+Q030;Qualidade de Software;Testes Unitários;MEDIA;C;A comunicação real entre API e banco verifica a integração entre componentes, não apenas uma unidade isolada.
+Q031;Governança de TI;ITIL e COBIT;FACIL;B;"ITIL oferece práticas de gestão de serviços; COBIT é um framework de governança e gestão de informação e tecnologia."
+Q032;Governança de TI;ITIL e COBIT;MEDIA;E;"O gerenciamento de incidentes busca restaurar o serviço; a investigação de causas subjacentes é foco do gerenciamento de problemas."
+Q033;Governança de TI;ITIL e COBIT;MEDIA;A;Disponibilidade expressa a proporção do período em que o serviço atende à condição operacional definida.
+Q034;Desenvolvimento Web;APIs REST;FACIL;D;GET é o método HTTP usual para recuperar representações de recursos.
+Q035;Desenvolvimento Web;APIs REST;MEDIA;C;HTTP 404 indica que o servidor não encontrou o recurso solicitado.
+Q036;Desenvolvimento Web;APIs REST;MEDIA;B;PUT é idempotente: múltiplas requisições idênticas têm o mesmo efeito pretendido que uma única requisição.
+Q037;Desenvolvimento Web;React;FACIL;E;Props são entradas recebidas por componentes, utilizadas para configurar seu comportamento e apresentação.
+Q038;Desenvolvimento Web;React;MEDIA;A;useState fornece um valor de estado e uma função para solicitar sua atualização.
+Q039;Desenvolvimento Web;React;MEDIA;D;Uma key estável permite ao React relacionar itens da lista entre renderizações, favorecendo reconciliação correta.
+Q040;Direito e Legislação;LGPD;FACIL;B;A LGPD define dado pessoal como informação relacionada a pessoa natural identificada ou identificável.
+Q041;Direito e Legislação;LGPD;MEDIA;C;A execução de contrato ou de procedimentos preliminares a pedido do titular é base legal prevista na LGPD, respeitadas suas condições.
+Q042;Direito e Legislação;LGPD;MEDIA;E;O princípio da necessidade limita o tratamento ao mínimo necessário para realização das finalidades informadas.

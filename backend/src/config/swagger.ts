@@ -339,7 +339,32 @@ const swaggerDocument = {
         }
       }
     },
-
+    "/api/simulados/{id}/finalizar": {
+  post: {
+    tags: ["Simulados"],
+    summary: "Finalizar e corrigir simulado demonstrativo",
+    description: "Corrige todas as respostas de uma só vez. Não persiste tentativas nem registra usuários; questões sem resposta são consideradas erradas. O tempo não é validado pelo servidor.",
+    parameters: [{ name: "id", in: "path", required: true, schema: { type: "integer", minimum: 1 } }],
+    requestBody: {
+      required: true,
+      content: { "application/json": { schema: {
+        type: "object", required: ["respostas"],
+        properties: { respostas: { type: "array", items: {
+          type: "object", required: ["questao_id", "alternativa_id"],
+          properties: { questao_id: { type: "integer" }, alternativa_id: { type: "integer" } }
+        } } }
+      } } }
+    },
+    responses: {
+      "200": { description: "Resultado e correção comentada" },
+      "400": { description: "Requisição inválida ou respostas duplicadas" },
+      "404": { description: "Simulado não encontrado" },
+      "409": { description: "Simulado sem questões publicadas" },
+      "422": { description: "Questão ou alternativa não pertence ao simulado" },
+      "500": { description: "Falha interna na correção" }
+    }
+  }
+},
     "/api/cursos": {
       get: {
         tags: ["Cursos"],

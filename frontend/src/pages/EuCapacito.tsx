@@ -222,14 +222,14 @@ export default function EuCapacito() {
         </p>
 
         <a
-          href={portal}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="course-button"
-        >
-          Acessar Programa Eu Capacito
-          <ExternalLink size={18} />
-        </a>
+  href="https://on.fiap.com.br/nano-courses/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="course-button"
+>
+  Explorar Nano Courses
+  <ExternalLink size={18} />
+</a>
       </section>
 
       <div className="capacito-privacy">

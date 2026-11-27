@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-
+import Autenticacao from "./pages/Autenticacao";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import PaginaProvisoria from "./pages/PaginaProvisoria";
@@ -13,6 +13,10 @@ import CursoDetalhes from "./pages/CursoDetalhes";
 import RecursoDetalhes from "./pages/RecursoDetalhes";
 import ProvasAnteriores from "./pages/ProvasAnteriores";
 import Questoes from "./pages/Questoes";
+import Simulados from "./pages/Simulados";
+import RecuperarSenha from "./pages/RecuperarSenha";
+import RedefinirSenha from "./pages/RedefinirSenha";
+import Desempenho from "./pages/Desempenho";
 
 import "./App.css";
 import Cursos from "./pages/Cursos";
@@ -23,6 +27,19 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
+        <Route
+  path="entrar"
+  element={<Autenticacao />}
+/>
+<Route
+  path="recuperar-senha"
+  element={<RecuperarSenha />}
+/>
+
+<Route
+  path="redefinir-senha"
+  element={<RedefinirSenha />}
+/>
         <Route
   path="recursos/:slug"
   element={<RecursoDetalhes />}
@@ -46,24 +63,14 @@ export default function App() {
           <Route path="questoes" element={<Questoes />} />
 
           <Route
-            path="simulados"
-            element={
-              <PaginaProvisoria
-                titulo="Simulados"
-                descricao="Prepare-se para concursos de TI."
-              />
-            }
-          />
+  path="simulados"
+  element={<Simulados />}
+/>
 
           <Route
-            path="desempenho"
-            element={
-              <PaginaProvisoria
-                titulo="Meu desempenho"
-                descricao="Acompanhe sua evolução nos estudos."
-              />
-            }
-          />
+  path="desempenho"
+  element={<Desempenho />}
+/>
 
           <Route
             path="assistente"

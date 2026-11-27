@@ -1,0 +1,715 @@
+
+/* ==========================================
+   GEEK DE BOA ACADEMY 2.0
+   MÓDULO DE SIMULADOS
+   ========================================== */
+
+.simulados-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Avisos */
+
+.simulados-aviso {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 18px;
+  background: #eaf2ff;
+  border-left: 4px solid #1769d2;
+  border-radius: 9px;
+  color: #123765;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.simulados-aviso svg {
+  flex-shrink: 0;
+}
+
+.simulados-erro {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px;
+  background: #fff2ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  color: #9a3412;
+  font-size: 13px;
+}
+
+.simulados-carregando {
+  padding: 24px;
+  text-align: center;
+  color: #526077;
+}
+
+/* Botões */
+
+.simulados-page button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid #1769d2;
+  border-radius: 9px;
+  background: #1769d2;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.simulados-page button:hover:not(:disabled) {
+  background: #1157b2;
+  border-color: #1157b2;
+}
+
+.simulados-page button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.simulados-page button.simulados-secundario {
+  background: #ffffff;
+  color: #1769d2;
+}
+
+.simulados-page button.simulados-secundario:hover:not(:disabled) {
+  background: #eaf2ff;
+  border-color: #1769d2;
+}
+
+.simulados-page button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+/* ==========================================
+   CATÁLOGO
+   ========================================== */
+
+.simulados-catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.simulados-catalogo-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.simulados-catalogo-cabecalho h2 {
+  margin: 0 0 7px;
+  color: #102a63;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.simulados-catalogo-cabecalho p {
+  color: #526077;
+  font-size: 14px;
+}
+
+.simulados-catalogo-cabecalho button {
+  flex-shrink: 0;
+}
+
+/* Dois cards por linha em telas grandes.
+   O botão Atualizar NÃO participa da grid. */
+
+.simulados-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.simulados-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  min-width: 0;
+  padding: 26px;
+
+  background: #ffffff;
+  border: 1px solid #dce3ef;
+  border-radius: 16px;
+
+  box-shadow: 0 3px 15px rgba(15, 35, 65, 0.04);
+}
+
+.simulados-card h3 {
+  margin: 0;
+  color: #102a63;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.simulados-card p {
+  color: #46566c;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.simulados-metadados {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: #526077;
+  font-size: 13px;
+}
+
+.simulados-metadados span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.simulados-card > button {
+  margin-top: auto;
+}
+
+.simulados-vazio {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 45px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  color: #526077;
+}
+
+.simulados-vazio h3 {
+  color: #102a63;
+}
+
+/* ==========================================
+   PAINÉIS
+   ========================================== */
+
+.simulados-painel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 22px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 30px;
+
+  background: #ffffff;
+  border: 1px solid #dce3ef;
+  border-radius: 17px;
+
+  box-shadow: 0 3px 15px rgba(15, 35, 65, 0.04);
+}
+
+.simulados-painel h2 {
+  color: #102a63;
+  font-size: 23px;
+  line-height: 1.4;
+}
+
+.simulados-painel h3 {
+  color: #102a63;
+  font-size: 18px;
+}
+
+.simulados-painel p {
+  line-height: 1.65;
+}
+
+.simulados-etapa {
+  color: #1769d2;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================
+   INSTRUÇÕES
+   ========================================== */
+
+.simulados-instrucoes {
+  max-width: 1050px;
+}
+
+.simulados-descricao {
+  color: #526077;
+  font-size: 15px;
+}
+
+.simulados-instrucoes-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.simulados-instrucoes-resumo > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  background: #edf4ff;
+  border: 1px solid #d9e8ff;
+  border-radius: 12px;
+  color: #102a63;
+}
+
+.simulados-instrucoes-resumo svg {
+  color: #1769d2;
+}
+
+.simulados-regras {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding-left: 24px;
+  margin: 0;
+
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.simulados-regras li {
+  padding-left: 4px;
+}
+
+.simulados-instrucoes-alerta {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 17px;
+
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 11px;
+
+  color: #9a3412;
+}
+
+.simulados-instrucoes-alerta svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.simulados-instrucoes-alerta p {
+  font-size: 14px;
+}
+
+.simulados-confirmacao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  padding: 15px 16px;
+
+  background: #f8fafc;
+  border: 1px solid #dce3ef;
+  border-radius: 10px;
+
+  color: #102a63;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.simulados-confirmacao input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #1769d2;
+}
+
+/* ==========================================
+   PROVA E CRONÔMETRO
+   ========================================== */
+
+.simulados-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.simulados-cabecalho p {
+  margin-top: 8px;
+  color: #526077;
+  font-size: 14px;
+}
+
+.simulados-relogio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 17px;
+  background: #edf4ff;
+  border: 1px solid #d9e8ff;
+  border-radius: 12px;
+
+  color: #102a63;
+  font-size: 23px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.simulados-relogio.urgente {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.simulados-progresso {
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e5ebf5;
+}
+
+.simulados-progresso > div {
+  height: 100%;
+  background: #1769d2;
+  transition: width 0.2s ease;
+}
+
+.simulados-indices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.simulados-page .simulados-indices button {
+  width: 41px;
+  height: 41px;
+  padding: 0;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #102a63;
+}
+
+.simulados-page .simulados-indices button.respondida {
+  background: #e8f0ff;
+  border-color: #1769d2;
+}
+
+.simulados-page .simulados-indices button.atual {
+  background: #1769d2;
+  border-color: #1769d2;
+  color: #ffffff;
+}
+
+.simulados-questao {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px 0;
+}
+
+.simulados-questao-numero {
+  color: #1769d2;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.simulados-enunciado {
+  color: #102a63;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.simulados-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.simulados-opcoes legend {
+  margin-bottom: 14px;
+  color: #102a63;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.simulados-opcoes label {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  padding: 17px;
+  border: 1px solid #dce3ef;
+  border-radius: 11px;
+
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.simulados-opcoes label:hover {
+  background: #f5f8ff;
+}
+
+.simulados-opcoes label.marcada {
+  background: #e8f0ff;
+  border-color: #1769d2;
+}
+
+.simulados-opcoes input {
+  margin-top: 5px;
+  accent-color: #1769d2;
+}
+
+.simulados-opcoes strong {
+  color: #1769d2;
+}
+
+.simulados-opcoes span {
+  flex: 1;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.simulados-opcoes:disabled label {
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   BOTÕES DE NAVEGAÇÃO
+   ========================================== */
+
+.simulados-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.simulados-acoes-prova {
+  padding-top: 18px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.simulados-page button.simulados-finalizar {
+  margin-left: auto;
+  background: #102a63;
+  border-color: #102a63;
+}
+
+.simulados-page button.simulados-finalizar:hover:not(:disabled) {
+  background: #173c83;
+  border-color: #173c83;
+}
+
+/* ==========================================
+   RESULTADO
+   ========================================== */
+
+.simulados-resultado-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.simulados-resultado-cabecalho > svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.simulados-resumo {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.simulados-resumo > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 23px 12px;
+  background: #f3f7ff;
+  border: 1px solid #e2eaf8;
+  border-radius: 12px;
+}
+
+.simulados-resumo strong {
+  color: #102a63;
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.simulados-resumo span {
+  color: #526077;
+  font-size: 13px;
+}
+
+.simulados-lista-correcao {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simulados-correcao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 22px;
+
+  background: #f8fafc;
+  border: 1px solid #dce3ef;
+  border-radius: 12px;
+}
+
+.simulados-correcao-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.simulados-correcao h4 {
+  color: #102a63;
+  font-size: 16px;
+}
+
+.simulados-correcao p {
+  color: #334155;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.simulados-icone-acerto {
+  color: #16a34a;
+}
+
+.simulados-icone-erro {
+  color: #dc2626;
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+   ========================================== */
+
+@media (max-width: 1100px) {
+  .simulados-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .simulados-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .simulados-catalogo-cabecalho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .simulados-instrucoes {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .simulados-painel,
+  .simulados-card {
+    padding: 19px;
+  }
+
+  .simulados-cabecalho {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .simulados-relogio {
+    font-size: 21px;
+  }
+
+  .simulados-instrucoes-resumo {
+    flex-direction: column;
+  }
+
+  .simulados-instrucoes-resumo > div {
+    width: 100%;
+  }
+
+  .simulados-resumo {
+    gap: 8px;
+  }
+
+  .simulados-resumo > div {
+    padding: 16px 5px;
+  }
+
+  .simulados-resumo strong {
+    font-size: 20px;
+  }
+
+  .simulados-resumo span {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  .simulados-questao {
+    padding: 15px 0;
+  }
+
+  .simulados-enunciado {
+    font-size: 15px;
+  }
+
+  .simulados-opcoes label {
+    padding: 13px;
+    gap: 11px;
+  }
+
+  .simulados-page button.simulados-finalizar {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .simulados-acoes {
+    gap: 10px;
+  }
+}
+.simulados-painel {
+  scroll-margin-top: 110px;
+}

@@ -1,7 +1,7 @@
 
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
 
 import { pool } from "./config/database";
@@ -11,8 +11,9 @@ import disciplinaRoutes from "./routes/disciplinaRoutes";
 import questaoRoutes from "./routes/questaoRoutes";
 import simuladoRoutes from "./routes/simuladoRoutes";
 import cursoRoutes from "./routes/cursoRoutes";
-
-dotenv.config();
+import authRoutes from "./routes/authRoutes";
+import recuperacaoSenhaRoutes from "./routes/recuperacaoSenhaRoutes";
+import tentativaRoutes from "./routes/tentativaRoutes";
 
 const app = express();
 
@@ -77,7 +78,10 @@ app.get("/api/openapi.json", (_req, res) => {
 app.use("/api/disciplinas", disciplinaRoutes);
 app.use("/api/questoes", questaoRoutes);
 app.use("/api/simulados", simuladoRoutes);
+app.use("/api/tentativas", tentativaRoutes);
 app.use("/api/cursos", cursoRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/recuperacao-senha",recuperacaoSenhaRoutes);
 
 // Inicialização do servidor
 app.listen(PORT, () => {

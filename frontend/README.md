@@ -1,75 +1,21 @@
-# React + TypeScript + Vite
+# Etapa 15 — Simulados demonstrativos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este pacote contém arquivos completos para copiar sobre os caminhos correspondentes no projeto.
+**Não substitua App.tsx nem swagger.ts**: use os arquivos .patch.txt como instruções.
 
-Currently, two official plugins are available:
+## Procedimento
+1. Faça commit de backup.
+2. Copie `backend/src/repositories/simuladoRepository.ts`, `services/simuladoService.ts`, `controllers/simuladoController.ts`, `routes/simuladoRoutes.ts`.
+3. Copie `frontend/src/services/simuladoService.ts`, `pages/Simulados.tsx`, `styles/simulados.css`.
+4. No `frontend/src/App.tsx`, importe `Simulados` e substitua a rota provisória por `<Route path="simulados" element={<Simulados />} />`.
+5. Documente o POST no Swagger.
+6. Rode `npm run build` em backend e frontend, depois `npm run dev` em ambos.
+7. Acesse /simulados e teste conclusão com zero, algumas e todas as respostas; teste IDs inválidos e alternativa de outra questão.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## API
+POST `/api/simulados/:id/finalizar`
+JSON `{"respostas":[{"questao_id":1,"alternativa_id":5}]}`
+Questões omitidas contam como erradas. O retorno inclui a correção comentada **apenas após a submissão**.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+## Limites
+Este é um **modo de demonstração**, sem autenticação, persistência nem controle antifraude. O cronômetro usa o relógio do navegador e pode reiniciar após atualização da página. Não usar como avaliação oficial.
