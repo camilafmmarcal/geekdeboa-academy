@@ -121,6 +121,7 @@ export default function Simulados() {
 
   const [iniciando, setIniciando] = useState(false);
   const [finalizando, setFinalizando] = useState(false);
+  const [desistindo, setDesistindo] = useState(false);
 
   const [erro, setErro] = useState("");
 
@@ -501,17 +502,31 @@ export default function Simulados() {
   // VOLTAR AO CATALOGO
   // ---------------------------------------------------
 
-  function voltarCatalogo() {
-    if (fase === "prova") {
-      const confirmou = window.confirm(
-        "Deseja abandonar o simulado? " +
-        "As respostas não enviadas serão perdidas."
-      );
+  async function desistirSimulado() {
+    const tentativaId = tentativaIdRef.current;
+    if (fase !== "prova" || tentativaId === null ||
+        finalizando || desistindo || bloqueioRef.current) return;
 
-      if (!confirmou) {
-        return;
-      }
+    if (!window.confirm(
+      "Desistir do simulado? A tentativa será registrada como desistida. " +
+      "As respostas não serão corrigidas."
+    )) return;
+
+    bloqueioRef.current = true;
+    setDesistindo(true);
+    setErro("");
+    try {
+      await tentativaService.desistir(tentativaId);
+      voltarCatalogo();
+    } catch (error) {
+      bloqueioRef.current = false;
+      setErro(mensagemErro(error, "Não foi possível registrar a desistência."));
+    } finally {
+      setDesistindo(false);
     }
+  }
+
+  function voltarCatalogo() {
 
     requisicaoAberturaRef.current++;
 
@@ -1091,7 +1106,7 @@ export default function Simulados() {
               <button
                 type="button"
                 className="simulados-finalizar"
-                disabled={finalizando}
+                disabled={finalizando || desistindo}
                 onClick={() => {
                   const confirmou =
                     restante === 0 ||
@@ -1109,6 +1124,14 @@ export default function Simulados() {
                 {finalizando
                   ? "Salvando resultado..."
                   : "Finalizar simulado"}
+              </button>
+              <button
+                type="button"
+                className="simulados-secundario"
+                disabled={finalizando || desistindo}
+                onClick={() => void desistirSimulado()}
+              >
+                {desistindo ? "Registrando desistência..." : "Desistir do simulado"}
               </button>
             </div>
           </section>
