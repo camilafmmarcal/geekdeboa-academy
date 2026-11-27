@@ -47,7 +47,7 @@ async listarModulos(cursoId: number): Promise<CursoModulo[]> {
        AND m.ativo = TRUE
        AND c.ativo = TRUE
        AND LOWER(c.nome) NOT LIKE '%cisco%'
-       AND LOWER(c.link) NOT LIKE '%cisco%'
+       AND LOWER(c.link) NOT LIKE '%cisco%' AND LOWER(c.link) NOT LIKE '%netacad%' AND LOWER(c.link) NOT LIKE '%skillsforall%'
      ORDER BY m.ordem ASC`,
     [cursoId]
   );
@@ -61,7 +61,7 @@ async listar(filtros: FiltrosCurso): Promise<Curso[]> {
   const condicoes = [
     "c.ativo = TRUE",
     "LOWER(c.nome) NOT LIKE '%cisco%'",
-    "LOWER(c.link) NOT LIKE '%cisco%'"
+    "LOWER(c.link) NOT LIKE '%cisco%' AND LOWER(c.link) NOT LIKE '%netacad%' AND LOWER(c.link) NOT LIKE '%skillsforall%'"
   ];
   const valores: string[] = [];
 
@@ -128,7 +128,7 @@ async buscarPorId(id: number): Promise<Curso | null> {
      WHERE c.id = ?
        AND c.ativo = TRUE
        AND LOWER(c.nome) NOT LIKE '%cisco%'
-       AND LOWER(c.link) NOT LIKE '%cisco%'`,
+       AND LOWER(c.link) NOT LIKE '%cisco%' AND LOWER(c.link) NOT LIKE '%netacad%' AND LOWER(c.link) NOT LIKE '%skillsforall%'`,
     [id]
   );
 
@@ -143,7 +143,7 @@ async buscarPorId(id: number): Promise<Curso | null> {
        FROM cursos
        WHERE ativo = TRUE
          AND LOWER(nome) NOT LIKE '%cisco%'
-         AND LOWER(link) NOT LIKE '%cisco%'
+         AND LOWER(link) NOT LIKE '%cisco%' AND LOWER(link) NOT LIKE '%netacad%' AND LOWER(link) NOT LIKE '%skillsforall%'
        GROUP BY categoria
        ORDER BY categoria`
     );
