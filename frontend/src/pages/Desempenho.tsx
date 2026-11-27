@@ -74,6 +74,8 @@ function statusLegivel(status: string): string {
       return "Finalizada";
     case "EXPIRADA":
       return "Expirada";
+    case "DESISTIDA":
+      return "Desistida";
     case "EM_ANDAMENTO":
       return "Em andamento";
     default:
@@ -107,7 +109,7 @@ export default function Desempenho() {
   const [erro, setErro] = useState("");
 
   const [filtro, setFiltro] = useState<
-  "TODAS" | "FINALIZADA" | "EXPIRADA" | "EM_ANDAMENTO"
+  "TODAS" | "FINALIZADA" | "EXPIRADA" | "EM_ANDAMENTO" | "DESISTIDA"
 >("FINALIZADA");
 
   const [autenticado, setAutenticado] =
@@ -440,6 +442,9 @@ export default function Desempenho() {
 
                   <option value="EXPIRADA">
                     Expiradas
+                  </option>
+                  <option value="DESISTIDA">
+                    Desistidas
                   </option>
                 </select>
               </label>
