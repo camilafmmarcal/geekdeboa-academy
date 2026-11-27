@@ -46,6 +46,8 @@ async listarModulos(cursoId: number): Promise<CursoModulo[]> {
      WHERE m.curso_id = ?
        AND m.ativo = TRUE
        AND c.ativo = TRUE
+       AND LOWER(c.nome) NOT LIKE '%cisco%'
+       AND LOWER(c.link) NOT LIKE '%cisco%'
      ORDER BY m.ordem ASC`,
     [cursoId]
   );
@@ -56,7 +58,11 @@ async listarModulos(cursoId: number): Promise<CursoModulo[]> {
   
 
 async listar(filtros: FiltrosCurso): Promise<Curso[]> {
-  const condicoes = ["c.ativo = TRUE"];
+  const condicoes = [
+    "c.ativo = TRUE",
+    "LOWER(c.nome) NOT LIKE '%cisco%'",
+    "LOWER(c.link) NOT LIKE '%cisco%'"
+  ];
   const valores: string[] = [];
 
   if (filtros.categoria) {
@@ -120,7 +126,9 @@ async buscarPorId(id: number): Promise<Curso | null> {
        ) AS total_modulos
      FROM cursos c
      WHERE c.id = ?
-       AND c.ativo = TRUE`,
+       AND c.ativo = TRUE
+       AND LOWER(c.nome) NOT LIKE '%cisco%'
+       AND LOWER(c.link) NOT LIKE '%cisco%'`,
     [id]
   );
 
@@ -134,6 +142,8 @@ async buscarPorId(id: number): Promise<Curso | null> {
          COUNT(*) AS quantidade
        FROM cursos
        WHERE ativo = TRUE
+         AND LOWER(nome) NOT LIKE '%cisco%'
+         AND LOWER(link) NOT LIKE '%cisco%'
        GROUP BY categoria
        ORDER BY categoria`
     );
