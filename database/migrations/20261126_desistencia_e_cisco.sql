@@ -15,14 +15,18 @@ ALTER TABLE tentativas
 SELECT id, nome, link, ativo
 FROM cursos
 WHERE LOWER(nome) LIKE '%cisco%'
-   OR LOWER(link) LIKE '%cisco%';
+   OR LOWER(link) LIKE '%cisco%'
+   OR LOWER(link) LIKE '%netacad%'
+   OR LOWER(link) LIKE '%skillsforall%';
 
 -- Desativação lógica: cursos permanecem no banco,
 -- mas deixam de constar nos endpoints da API.
 UPDATE cursos
 SET ativo = FALSE
 WHERE LOWER(nome) LIKE '%cisco%'
-   OR LOWER(link) LIKE '%cisco%';
+   OR LOWER(link) LIKE '%cisco%'
+   OR LOWER(link) LIKE '%netacad%'
+   OR LOWER(link) LIKE '%skillsforall%';
 
 -- Conferência: nenhuma linha ativa da Cisco deve permanecer.
 SELECT id, nome, link
@@ -31,6 +35,8 @@ WHERE ativo = TRUE
   AND (
     LOWER(nome) LIKE '%cisco%'
     OR LOWER(link) LIKE '%cisco%'
+   OR LOWER(link) LIKE '%netacad%'
+   OR LOWER(link) LIKE '%skillsforall%'
   );
 
 -- Os demais cursos permanecem inalterados.
