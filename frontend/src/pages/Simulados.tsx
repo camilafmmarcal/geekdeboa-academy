@@ -509,6 +509,31 @@ export default function Simulados() {
 
     limparEVoltarCatalogo();
   }
+  async function desistirSimulado() {
+    const tentativaId = tentativaIdRef.current;
+    if (fase !== "prova" || tentativaId === null ||
+        finalizando || desistindo || bloqueioRef.current) return;
+
+    if (!window.confirm(
+      "Desistir do simulado? A tentativa será registrada como desistida. " +
+      "As respostas não serão corrigidas."
+    )) return;
+
+    bloqueioRef.current = true;
+    setDesistindo(true);
+    setErro("");
+    try {
+      await tentativaService.desistir(tentativaId);
+      voltarCatalogo();
+    } catch (error) {
+      bloqueioRef.current = false;
+      setErro(mensagemErro(error, "Não foi possível registrar a desistência."));
+    } finally {
+      setDesistindo(false);
+    }
+  }
+
+  function voltarCatalogo() {
 
   function limparEVoltarCatalogo() {
     requisicaoAberturaRef.current++;
@@ -1145,6 +1170,14 @@ export default function Simulados() {
                 {finalizando
                   ? "Salvando resultado..."
                   : "Finalizar simulado"}
+              </button>
+              <button
+                type="button"
+                className="simulados-secundario"
+                disabled={finalizando || desistindo}
+                onClick={() => void desistirSimulado()}
+              >
+                {desistindo ? "Registrando desistência..." : "Desistir do simulado"}
               </button>
             </div>
           </section>
